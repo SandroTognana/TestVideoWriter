@@ -67,30 +67,36 @@ namespace TestVideoWriter
 
 #if TEST_ONNX
             var sessionOptions = new SessionOptions();
-            int quale = 2;
-            // CPU è sempre disponibile
-            sessionOptions.AppendExecutionProvider_CPU();
-            Console.WriteLine("Provider disponibile: CPU");
-            MessageBox.Show("Provider disponibile: CPU");
-            try
-            {
-                // Prova ad aggiungere DirectML
-                sessionOptions.AppendExecutionProvider_DML();
-                Console.WriteLine("Provider disponibile: DirectML");
-                MessageBox.Show("Provider disponibile: DirectML");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"DirectML non disponibile: {ex.Message}");
-                MessageBox.Show($"DirectML non disponibile: {ex.Message}");
-            }
+            //int quale = 2;
+            //// CPU è sempre disponibile
+            //sessionOptions.AppendExecutionProvider_CPU();
+            //Console.WriteLine("Provider disponibile: CPU");
+            //MessageBox.Show("Provider disponibile: CPU");
+            //try
+            //{
+            //    // Prova ad aggiungere DirectML
+            //    sessionOptions.AppendExecutionProvider_DML();
+            //    Console.WriteLine("Provider disponibile: DirectML");
+            //    MessageBox.Show("Provider disponibile: DirectML");
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine($"DirectML non disponibile: {ex.Message}");
+            //    MessageBox.Show($"DirectML non disponibile: {ex.Message}");
+            //}
 
             try
             {
+               
                 // Prova ad aggiungere CUDA
-                sessionOptions.AppendExecutionProvider_CUDA(1);
+                sessionOptions.AppendExecutionProvider_CUDA(0);
+                sessionOptions.GraphOptimizationLevel = GraphOptimizationLevel.ORT_ENABLE_ALL;
+                //sessionOptions.GraphOptimizationLevel = (GraphOptimizationLevel.ORT_ENABLE_EXTENDED);
+                sessionOptions.EnableMemoryPattern = true;
+                sessionOptions.ExecutionMode = ExecutionMode.ORT_SEQUENTIAL;
+
                 Console.WriteLine("Provider disponibile: CUDA");
-                Console.WriteLine("Provider disponibile: CUDA");
+                MessageBox.Show("Provider disponibile: CUDA");
             }
             catch (Exception ex)
             {
@@ -121,12 +127,15 @@ namespace TestVideoWriter
             Stopwatch sw = new Stopwatch();
             sw.Start();
             // 5. Esegui l'inferenza
-            using (var results = session.Run(inputs))
+            for (int i = 0; i < 100; i++)
             {
-                var output = results.First().AsTensor<float>();
+                using (var results = session.Run(inputs))
+                {
+                    var output = results.First().AsTensor<float>();
+                }
             }
             sw.Stop();
-            MessageBox.Show($"Inferenza in {sw.ElapsedMilliseconds} ms");
+            MessageBox.Show($"Inferenza in {sw.ElapsedMilliseconds/100} ms");
 #endif
         }
 
