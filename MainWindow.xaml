@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Height="116" Margin="260,186,0,0" VerticalAlignment="Top" Width="193" Click="button_Click"/>
+        <Button x:Name="button" Content="Write video" HorizontalAlignment="Left" Height="72" Margin="260,332,0,0" VerticalAlignment="Top" Width="193" Click="button_Click"/>
+        <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" Height="72" Margin="503,332,0,0" VerticalAlignment="Top" Width="198" Click="button1_Click"/>
+        <Button x:Name="button2" Content="Read video" HorizontalAlignment="Left" Height="72" Margin="82,332,0,0" VerticalAlignment="Top" Width="130" Click="button2_Click"/>
+        <Image x:Name="imgScan" HorizontalAlignment="Left" Height="253" Margin="177,35,0,0" VerticalAlignment="Top" Width="435" Stretch="Fill"/>
+        <Button x:Name="btnWebCam" Content="WebCam" HorizontalAlignment="Left" Height="36" Margin="737,368,0,0" VerticalAlignment="Top" Width="53" Click="btnWebCam_Click"/>
 
     </Grid>
 </Window>
